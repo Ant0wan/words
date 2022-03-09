@@ -12,7 +12,7 @@ import Data.Maybe(catMaybes)
 import Data
 
 outputGrid :: Grid -> IO ()
-outputGrid grid = putStrLn $ formatGrid grid
+outputGrid = putStrLn . formatGrid
 
 formatGrid :: Grid -> String
 formatGrid = unlines
