@@ -6,6 +6,7 @@ module Lib
     , findWordInLine
     , grid
     , languages
+    , skew
     ) where
 
 import Data.List(isInfixOf, transpose)
@@ -23,8 +24,17 @@ getLines :: Grid -> [String]
 getLines grid =
   let horizontal = grid
       vertical = transpose grid
-      lines = horizontal ++ vertical
+      diagonals = diagonalize grid ++ diagonalize (map reverse grid)
+      lines = horizontal ++ vertical ++ diagonals
   in lines ++ (map reverse lines)
+
+diagonalize :: Grid -> Grid
+diagonalize = transpose . skew
+
+skew :: Grid -> Grid
+skew [] = []
+skew (l:ls) = l : skew (map indent ls)
+  where indent line = '_' : line
 
 findWord :: Grid -> String -> Maybe String
 findWord grid word =
